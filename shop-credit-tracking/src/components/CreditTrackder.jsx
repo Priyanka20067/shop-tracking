@@ -54,21 +54,34 @@ function CreditTracker() {
                 />
             <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Credit Amount" />
             <button onClick={addCredit}>Add Credit</button>
-            <ul>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Items</th>
+                    <th>Date</th>
+                    <th>Ph</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
                 {credits.map((credit, index) => (
                     <li key={index} className="credit-item">
-                        <div className="credit-item">
-                        {credit.name}: ₹{credit.amount}; <hr /><hr /><hr />
+                        
+                       <td> {credit.name}:</td> <td>₹{credit.amount};</td> <hr /><hr /><hr />
                                 Items: {credit.items.join(', ')}; <hr /><hr /><hr />
                         Date: {credit.date};<hr /><hr /><hr />
                         Ph: {credit.phone};<hr /><hr /><hr />
                          <button className="delete-btn" onClick={() => deleteCredit(index)}>Delete</button>
-                    </div>
+                    
                      </li>
                     
                 ))}
-            </ul>
+                </tr>
+            
+            
             <p>Total Credit: ₹{credits.reduce((sum, credit) => sum + credit.amount, 0)}</p>
+            </table>
+
         </div>
     );
 }
