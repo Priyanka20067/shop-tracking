@@ -1,6 +1,6 @@
 // src/components/CustomerForm.jsx
 import { useState } from 'react';
-import '../screen/Customer.css';
+import '../components/Customer.css';
 
 
 const CustomerForm = () => {

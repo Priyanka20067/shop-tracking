@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; import logo from '../assets/logo.png';
-import "../screen/hom.css";
+import "../components/hom.css";
 function Home() { const [menuOpen, setMenuOpen] = useState(false);
 
 return ( <div className="home"> <nav className="navbar"> <img src={logo} alt="Shop Credit Logo" className="logo" /> <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}> ☰ </button> <ul className={menuOpen ? "nav-items open" : "nav-items"}> <li><a href="#about">About</a></li> <li><a href="#features">Features</a></li> <li><a href="#demo">Demo</a></li> <li><a href="#contact">Contact</a></li> </ul> </nav>

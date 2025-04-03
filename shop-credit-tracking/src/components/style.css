@@ -1,0 +1,90 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #e2f661db;
+    padding: 20px;
+  }
+  
+  .app-container {
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .calculator,
+  .credit-tracker {
+    background: rgba(233, 83, 83, 0.467);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+  }
+  
+  .display {
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: right;
+    padding: 5px;
+  }
+  
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+  
+  button {
+    padding: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background-color: #aecdf6;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #5e9bea;
+  }
+  
+  .credit-tracker input {
+    margin: 5px;
+    padding: 5px;
+    width: 80%;
+  }
+  
+  #creditList {
+    list-style-type: none;
+    padding: 10px;
+    text-align: left;
+    background-color: rgba(248, 232, 232, 0.721);
+    color: rgb(0, 0, 0);
+    width: 100%;
+    border-radius: 10%;
+  }
+  
+  .credit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+  }
+  
+  .delete-btn {
+    background-color: blue;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  
+  .delete-btn:hover {
+    background-color: darkblue;
+  }
+  
