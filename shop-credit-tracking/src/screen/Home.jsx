@@ -1,6 +1,5 @@
-import React, { useState } from 'react'; import logo from '../assets/logo.png'; 
- import '../screen/hom.css'; 
-
+import React, { useState } from 'react'; import logo from '../assets/logo.png';
+import "../screen/hom.css";
 function Home() { const [menuOpen, setMenuOpen] = useState(false);
 
 return ( <div className="home"> <nav className="navbar"> <img src={logo} alt="Shop Credit Logo" className="logo" /> <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}> ☰ </button> <ul className={menuOpen ? "nav-items open" : "nav-items"}> <li><a href="#about">About</a></li> <li><a href="#features">Features</a></li> <li><a href="#demo">Demo</a></li> <li><a href="#contact">Contact</a></li> </ul> </nav>
@@ -13,9 +12,27 @@ return ( <div className="home"> <nav className="navbar"> <img src={logo} alt="Sh
   <main className="main-content">
     <section id="about" className="intro">
       <h2>About Us</h2>
-      <p>
-        This application helps shop owners track customer credits, calculate totals, and manage daily tasks efficiently.
-      </p>
+      
+      <h3>Our Mission</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      
+      <h3>Why Choose Us?</h3>
+      <p>Vestibulum ac velit at sapien interdum tincidunt.</p>
+      
+      <h3>How It Works</h3>
+      <p>Curabitur nec massa et quam malesuada convallis.</p>
+      
+      <h3>Customer Benefits</h3>
+      <p>Donec sed sapien auctor, ultrices lacus at, cursus lectus.</p>
+      
+      <h3>Security and Reliability</h3>
+      <p>Quisque a libero vitae orci vulputate vehicula.</p>
+      
+      <h3>Innovation and Technology</h3>
+      <p>Morbi in odio sed ex congue egestas id id justo.</p>
+      
+      <h3>Future Goals</h3>
+      <p>Sed sollicitudin elit nec mi hendrerit, ut gravida nulla cursus.</p>
     </section>
     
     <section id="features" className="features">
