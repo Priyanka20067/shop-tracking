@@ -1,0 +1,79 @@
+/* Home.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+  }
+  
+  .home {
+    text-align: center;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 15px;
+    color: white;
+    position: relative;
+  }
+  
+  .logo {
+    width: 50px;
+  }
+  
+  .menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .nav-items {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-items li {
+    display: inline;
+  }
+  
+  .nav-items a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* Responsive Sidebar Menu */
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: block;
+    }
+  
+    .nav-items {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background-color: #007bff;
+      flex-direction: column;
+      padding: 10px;
+    }
+  
+    .nav-items.open {
+      display: flex;
+    }
+  
+    .nav-items li {
+      text-align: center;
+      padding: 10px 0;
+    }
+  }
+  
+  /* Rest of the styles remain unchanged */
