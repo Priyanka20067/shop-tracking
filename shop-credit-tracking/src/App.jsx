@@ -7,12 +7,12 @@ function App() {
     <Router>
       <Routes>
       <Route path='/' element={<Home />} />
-<<<<<<< HEAD
+{/* <<<<<<< HEAD */}
         <Route path='/calculater' element={<Calculator />} />
         <Route path='/customerform' element={<CustomerForm />} />
-=======
+{/* ======= */}
         <Route path='/calculator' element={<Calculator />} />
->>>>>>> 5e6e0f2f8b3cc34a7dca5290c0ce48b987c12ff4
+{/* >>>>>>> 5e6e0f2f8b3cc34a7dca5290c0ce48b987c12ff4 */}
          
       </Routes>
     </Router>
