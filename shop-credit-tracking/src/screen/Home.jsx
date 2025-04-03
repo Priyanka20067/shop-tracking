@@ -1,4 +1,5 @@
-import React, { useState } from 'react'; import logo from './logo.png'; // Make sure to add a logo image in your project import './Home.css'; // Import the CSS file
+import React, { useState } from 'react'; import logo from '../assets/logo.png'; 
+ import '../screen/hom.css'; 
 
 function Home() { const [menuOpen, setMenuOpen] = useState(false);
 
