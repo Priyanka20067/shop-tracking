@@ -1,122 +1,117 @@
-/* src/components/Customer.css */
-.customer-container {
-  display: flex;
-  flex-direction: column;
-  max-width: 1000px;
-  margin: 0 auto;
+.customer-page-container {
+  max-width: 500px;
+  margin: 20px auto;
   padding: 20px;
+  background-color: #f7f9fc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   font-family: Arial, sans-serif;
 }
 
-.form-section {
-  background-color: #f5f5f5;
-  padding: 20px;
-  border-radius: 8px;
+.form-section,
+.contacts-section {
   margin-bottom: 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.form-section h2 {
-  color: #333;
-  margin-bottom: 20px;
+h2 {
   text-align: center;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .customer-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  margin-bottom: 15px;
 }
 
-.form-group label {
+label {
+  margin-bottom: 5px;
   font-weight: bold;
-  color: #555;
+  display: block;
 }
 
-.form-group input,
-.form-group textarea {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+input,
+textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
-.form-group textarea {
-  min-height: 100px;
+textarea {
   resize: vertical;
 }
 
 .submit-btn {
-  background-color: #4CAF50;
+  background-color: #3498DB;
   color: white;
+  padding: 10px 14px;
   border: none;
-  padding: 12px;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 6px;
   font-size: 16px;
-  margin-top: 10px;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .submit-btn:hover {
-  background-color: #45a049;
-}
-
-.contacts-section {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.contacts-section h2 {
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
+  background-color: #2980B9;
 }
 
 .contact-list {
   list-style: none;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
 }
 
 .contact-item {
-  background-color: #f9f9f9;
+  background-color: #ecf0f1;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.contact-item strong {
-  display: block;
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #333;
+  margin-bottom: 15px;
+  position: relative;
 }
 
 .contact-item p {
   margin: 5px 0;
-  color: #666;
 }
 
-@media (min-width: 768px) {
-  .customer-container {
-    flex-direction: row;
-    gap: 30px;
-  }
-  
-  .form-section,
-  .contacts-section {
-    flex: 1;
-    margin-bottom: 0;
-  }
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.edit-btn,
+.delete-btn,
+.clear-btn {
+  background-color: #2C3E50;
+  color: #FAF3E0;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-btn:hover {
+  background-color: #3498DB;
+}
+
+.delete-btn:hover {
+  background-color: #E74C3C;
+}
+
+.clear-btn {
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #E67E22;
+}
+
+.clear-btn:hover {
+  background-color: #D35400;
 }

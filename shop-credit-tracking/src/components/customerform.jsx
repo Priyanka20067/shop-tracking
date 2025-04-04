@@ -1,44 +1,73 @@
-// src/components/CustomerForm.jsx
-import { useState } from 'react';
-import '../components/Customer.css';
-
+import { useEffect, useState } from "react";
+import "../components/Customer.css";
 
 const CustomerForm = () => {
   const [customer, setCustomer] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: ''
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
   });
-  
   const [contacts, setContacts] = useState([]);
+  const [editId, setEditId] = useState(null);
+
+  // Load from localStorage
+  useEffect(() => {
+    const storedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
+    setContacts(storedContacts);
+  }, []);
+
+  // Save to localStorage
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCustomer(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setCustomer((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add new customer to contacts list
-    setContacts(prev => [...prev, { ...customer, id: Date.now() }]);
-    // Reset form
-    setCustomer({
-      name: '',
-      email: '',
-      phone: '',
-      address: ''
-    });
-    alert('Customer added successfully!');
+
+    if (editId !== null) {
+      setContacts((prev) =>
+        prev.map((c) => (c.id === editId ? { ...customer, id: editId } : c))
+      );
+      setEditId(null);
+    } else {
+      setContacts((prev) => [...prev, { ...customer, id: Date.now() }]);
+    }
+
+    setCustomer({ name: "", email: "", phone: "", address: "" });
+  };
+
+  const handleEdit = (id) => {
+    const contactToEdit = contacts.find((c) => c.id === id);
+    setCustomer(contactToEdit);
+    setEditId(id);
+  };
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this contact?"
+    );
+    if (confirmDelete) {
+      setContacts((prev) => prev.filter((c) => c.id !== id));
+    }
+  };
+
+  const handleClearAll = () => {
+    const confirmClear = window.confirm("Clear all contacts?");
+    if (confirmClear) {
+      setContacts([]);
+    }
   };
 
   return (
     <div className="customer-page-container">
       <div className="form-section">
-        <h2>Add New Customer</h2>
+        <h2>{editId ? "Edit Customer" : "Add New Customer"}</h2>
         <form onSubmit={handleSubmit} className="customer-form">
           <div className="form-group">
             <label htmlFor="name">Full Name:</label>
@@ -52,7 +81,6 @@ const CustomerForm = () => {
               placeholder="Enter customer name"
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
@@ -65,7 +93,6 @@ const CustomerForm = () => {
               placeholder="Enter customer email"
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="phone">Phone:</label>
             <input
@@ -78,7 +105,6 @@ const CustomerForm = () => {
               placeholder="Enter phone number"
             />
           </div>
-
           <div className="form-group">
             <label htmlFor="address">Address:</label>
             <textarea
@@ -92,7 +118,7 @@ const CustomerForm = () => {
           </div>
 
           <button type="submit" className="submit-btn">
-            Add Customer
+            {editId ? "Update Customer" : "Add Customer"}
           </button>
         </form>
       </div>
@@ -102,16 +128,35 @@ const CustomerForm = () => {
         {contacts.length === 0 ? (
           <p>No contacts yet</p>
         ) : (
-          <ul className="contact-list">
-            {contacts.map(contact => (
-              <li key={contact.id} className="contact-item">
-                <strong>{contact.name}</strong>
-                <p>Email: {contact.email}</p>
-                <p>Phone: {contact.phone}</p>
-                <p>Address: {contact.address}</p>
-              </li>
-            ))}
-          </ul>
+          <>
+            <button onClick={handleClearAll} className="clear-btn">
+              Clear All
+            </button>
+            <ul className="contact-list">
+              {contacts.map((contact) => (
+                <li key={contact.id} className="contact-item">
+                  <strong>{contact.name}</strong>
+                  <p>Email: {contact.email}</p>
+                  <p>Phone: {contact.phone}</p>
+                  <p>Address: {contact.address}</p>
+                  <div className="btn-group">
+                    <button
+                      onClick={() => handleEdit(contact.id)}
+                      className="edit-btn"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(contact.id)}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </>
         )}
       </div>
     </div>
