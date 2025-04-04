@@ -1,71 +1,328 @@
-.app {
-    max-width: 800px;
+/* Base styles with updated color theme */
+:root {
+    --primary: #2C3E50;        /* Deep Blue */
+    --primary-light: #3D5166;  /* Lighter shade for gradients */
+    --primary-dark: #1A2733;   /* Darker shade for gradients */
+    --secondary: #F4A261;      /* Mustard Yellow */
+    --secondary-light: #F6B37D; /* Lighter shade for gradients */
+    --secondary-dark: #E08C41; /* Darker shade for gradients */
+    --background: #FAF3E0;     /* Soft Cream */
+    --card-bg: white;
+    --text: #2C3E50;           /* Deep Blue for text */
+    --success: #4E9F3D;        /* Complementary green */
+    --success-light: #60B54E;  /* Lighter shade for gradients */
+    --success-dark: #3D8930;   /* Darker shade for gradients */
+    --danger: #E76F51;         /* Complementary orange-red */
+    --danger-light: #EA8569;   /* Lighter shade for gradients */
+    --danger-dark: #D55A3A;    /* Darker shade for gradients */
+    --warning: #F4A261;        /* Using Mustard Yellow */
+    --border-radius: 8px;
+    --button-radius: 6px;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --button-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+  }
+  
+  .app {
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+  }
+  
+  h1 {
     text-align: center;
+    color: var(--primary);
+    margin-bottom: 30px;
+    animation: fadeIn 1s ease-in;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: var(--primary);
+    border-bottom: 2px solid var(--secondary);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
   }
   
   .features {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    flex-direction: column;
+    gap: 30px;
   }
   
-  .calculator, .todo-list {
-    flex: 1;
+  @media (min-width: 768px) {
+    .features {
+      flex-direction: row;
+    }
+  }
+  
+  /* Calculator styles */
+  .calculator {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    box-shadow: var(--shadow);
+    flex: 1;
+    min-width: 300px;
+    animation: slideInLeft 0.5s ease-out;
+    border-top: 4px solid var(--primary);
   }
   
-  .calculator input {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 5px;
+  .calculator input[type="text"] {
+    width: 90%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1.2rem;
+    text-align: right;
+    background-color: #F8F9FA;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   }
   
   .calculator .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
+    gap: 10px;
   }
   
-  .todo-list .input-group {
-    display: flex;
-    flex-direction: column;
+  /* Real 3D button styles */
+  .calculator button {
+    padding: 15px;
+    border: none;
+    border-radius: var(--button-radius);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    box-shadow: var(--button-shadow);
+    font-weight: bold;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(to bottom, var(--primary-light), var(--primary-dark));
+    color: white;
+  }
+  
+  .calculator button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(to bottom, var(--primary-light), var(--primary));
+  }
+  
+  .calculator button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Operation buttons with secondary color */
+  .calculator button:nth-child(4n) {
+    background-image: linear-gradient(to bottom, var(--secondary-light), var(--secondary-dark));
+    color: var(--primary-dark);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  
+  .calculator button:nth-child(4n):hover {
+    background-image: linear-gradient(to bottom, var(--secondary-light), var(--secondary));
+  }
+  
+  .calculator button:last-child {
+    grid-column: span 4;
+    background-image: linear-gradient(to bottom, var(--danger-light), var(--danger-dark));
+    color: white;
+  }
+  
+  .calculator button:last-child:hover {
+    background-image: linear-gradient(to bottom, var(--danger-light), var(--danger));
+  }
+  
+  /* Todo list styles */
+  .todo-list {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    flex: 2;
+    animation: slideInRight 0.5s ease-out;
+    border-top: 4px solid var(--secondary);
+  }
+  
+  .input-group {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 10px;
     margin-bottom: 20px;
   }
   
-  .todo-list input {
-    padding: 5px;
-    width: 100%;
+  @media (min-width: 768px) {
+    .input-group {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .input-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    background-color: #F8F9FA;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input-group button {
+    padding: 14px 12px;
+    border: none;
+    border-radius: var(--button-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+    grid-column: 1 / -1;
+    background-image: linear-gradient(to bottom, var(--primary-light), var(--primary-dark));
+    color: white;
+    font-weight: bold;
+    position: relative;
+    box-shadow: var(--button-shadow);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .input-group button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(to bottom, var(--primary-light), var(--primary));
+  }
+  
+  .input-group button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
   }
   
   .todo-list ul {
     list-style: none;
     padding: 0;
+    margin: 0;
   }
   
   .todo-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: var(--border-radius);
+    background: linear-gradient(to right, #F8F9FA, #F0F0F0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.3s ease-in;
+    border-left: 4px solid var(--primary);
+    position: relative;
+    overflow: hidden;
   }
   
-  button {
-    padding: 5px 10px;
-    cursor: pointer;
-    background-color: #007bff;
-    color:black;
+  .todo-list li::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary-light), transparent);
+  }
+  
+  .todo-list li button {
     border: none;
-    border-radius: 3px;
+    border-radius: var(--button-radius);
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    background-image: linear-gradient(to bottom, var(--danger-light), var(--danger-dark));
+    color: white;
+    font-weight: bold;
+    position: relative;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
   }
   
-  button:hover {
-    background-color: #0056b3;
+  .todo-list li button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(to bottom, var(--danger-light), var(--danger));
+  }
+  
+  .todo-list li button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Summary section */
+  .summary {
+    background-image: linear-gradient(to right, var(--primary-dark), var(--primary));
+    color: white;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .summary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+  }
+  
+  .summary h3 {
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideInLeft {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes slideInRight {
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  .highlight {
+    animation: pulse 0.6s ease;
+    background: linear-gradient(to right, #FDF0D5, #FAF3E0) !important;
+    border-left: 4px solid var(--secondary) !important;
+  }
+  
+  /* Button effect overlay */
+  .calculator button::after,
+  .input-group button::after,
+  .todo-list li button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+    border-radius: var(--button-radius) var(--button-radius) 0 0;
   }
