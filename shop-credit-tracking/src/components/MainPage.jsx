@@ -155,6 +155,12 @@ function CreditTracker() {
         />
         <button onClick={addCredit}>{editId ? 'Update Credit' : 'Add Credit'}</button>
       </div>
+      <div className="history-container">
+      <button className="history-button" onClick={() => navigate("/customerhistory")}>
+        History
+      </button>
+      <span className="plus-symbol" onClick={() => navigate("/customerhistory")}>+</span>
+    </div>
 
       <ul>
         {credits.map((credit, index) => (
@@ -168,8 +174,9 @@ function CreditTracker() {
               <br />
               <small>Date: {credit.date} {credit.phone && `| Phone: ${credit.phone}`}</small>
             </div>
-            <button onClick={() => handleEdit(credit)}>Edit</button>
+            
             <button onClick={() => handleNotification(credit)}>Send Notification</button>
+            <button onClick={() => handleEdit(credit)}>Edit</button>
             <button onClick={() => deleteCredit(index)}>Delete</button>
           </li>
         ))}

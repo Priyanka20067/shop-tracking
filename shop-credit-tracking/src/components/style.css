@@ -328,3 +328,34 @@ h2 {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
   border-radius: var(--button-radius) var(--button-radius) 0 0;
 }
+.history-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between button and plus symbol */
+}
+
+.history-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+}
+
+.history-button:hover {
+  background-color: #0056b3;
+}
+
+.plus-symbol {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.plus-symbol:hover {
+  color: #0056b3;
+}
