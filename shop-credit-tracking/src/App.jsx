@@ -11,9 +11,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/main' element={<MainPage />} />
-        <Route path='/customer-form' element={<CustomerForm />} />
+        <Route path='/customerform' element={<CustomerForm />} />
         <Route path='/signup' element={<Signup />} />
-        <Route path='/customer-history' element={<CustomerHistory />} />
+        <Route path='/customerhistory' element={<CustomerHistory />} />
       </Routes>
     </Router>
   );
