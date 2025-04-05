@@ -162,7 +162,7 @@ function CreditTracker({ navigate }) {
       <button className="history-button" onClick={() => navigate("/customerhistory")}>
         History
       </button>
-      <span className="plus-symbol" onClick={() => navigate("/customerform")}>+</span>
+      <button className="plus-symbol" onClick={() => navigate("/customerform")}>+</button>
     </div>
 
       <ul>

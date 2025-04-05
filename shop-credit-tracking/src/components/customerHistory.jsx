@@ -92,6 +92,7 @@ function CustomerHistory() {
         />
         <button onClick={() => navigate('/')}>Back to Home</button>
       </div>
+      {/* Add history */}
 
       <div className="summary">
         <h3>Total Historical Credit: ₹{totalHistoryCredit.toFixed(2)}</h3>
