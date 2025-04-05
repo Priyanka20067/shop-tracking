@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MainPage';
-import './style.css';
+import './customerhistry.css';
 
 
 function CustomerHistory() {

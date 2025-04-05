@@ -1,0 +1,307 @@
+/* CustomerHistory Styles */
+:root {
+    --deep-blue: #2C3E50;
+    --mustard-yellow: #F4A261;
+    --soft-cream: #FAF3E0;
+    --dark-accent: #1a2a38;
+    --light-accent: #f8f0d9;
+    --success-green: #4CAF50;
+    --danger-red: #e74c3c;
+    --edit-blue: #3498db;
+    --notification-purple: #9b59b6;
+    --transition-speed: 0.3s;
+  }
+  
+  .customer-history {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 1rem 2rem 3rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .customer-history h2 {
+    color: var(--deep-blue);
+    text-align: center;
+    margin: 1rem 0 2rem;
+    font-size: 2rem;
+    border-bottom: 3px solid var(--mustard-yellow);
+    padding-bottom: 0.8rem;
+    position: relative;
+  }
+  
+  .history-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .history-controls input {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--light-accent);
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all var(--transition-speed);
+  }
+  
+  .history-controls input:focus {
+    outline: none;
+    border-color: var(--mustard-yellow);
+    box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.2);
+  }
+  
+  .history-controls button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(to right, var(--deep-blue), var(--dark-accent));
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+  }
+  
+  .history-controls button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
+  }
+  
+  /* List styles */
+  .customer-history ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+  }
+  
+  .customer-history li {
+    background-color: var(--soft-cream);
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    transition: all var(--transition-speed);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .customer-history li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .customer-history li.highlight {
+    background: linear-gradient(to right, var(--soft-cream), #f8e8c7);
+    border-left: 4px solid var(--mustard-yellow);
+  }
+  
+  .customer-history li strong {
+    color: var(--deep-blue);
+    font-size: 1.1rem;
+  }
+  
+  .customer-history li small {
+    display: block;
+    color: #666;
+    margin-top: 0.3rem;
+  }
+  
+  /* Buttons */
+  .customer-history li button {
+    margin-right: 0.5rem;
+    margin-top: 0.8rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+  }
+  
+  .customer-history li button:first-of-type {
+    background-color: var(--notification-purple);
+    color: white;
+  }
+  
+  .customer-history li button:nth-of-type(2) {
+    background-color: var(--edit-blue);
+    color: white;
+  }
+  
+  .customer-history li button:last-of-type {
+    background-color: var(--danger-red);
+    color: white;
+  }
+  
+  .customer-history li button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Edit form */
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-form input {
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+  
+  .edit-form input:focus {
+    outline: none;
+    border-color: var(--mustard-yellow);
+    box-shadow: 0 0 0 2px rgba(244, 162, 97, 0.2);
+  }
+  
+  .edit-form button {
+    padding: 0.7rem !important;
+    margin-top: 0.5rem !important;
+  }
+  
+  .edit-form button:first-of-type {
+    background-color: var(--success-green) !important;
+  }
+  
+  .edit-form button:last-of-type {
+    background-color: #95a5a6 !important;
+  }
+  
+  /* History actions */
+  .history-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* Summary section */
+  .summary {
+    background: linear-gradient(135deg, var(--deep-blue) 0%, var(--dark-accent) 100%);
+    color: white;
+    padding: 1.2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .summary h3 {
+    color: var(--mustard-yellow);
+    margin: 0 0 0.5rem;
+  }
+  
+  .summary p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+  
+  /* Loading state */
+  .loading {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: var(--deep-blue);
+    background-color: var(--soft-cream);
+    border-radius: 8px;
+    margin: 2rem auto;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    animation: pulse 2s infinite;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+  
+  /* Responsive design */
+  @media (min-width: 768px) {
+    .customer-history li {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .customer-history li > div {
+      flex: 1;
+    }
+  
+    .history-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .edit-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+    
+    .edit-form input:first-of-type {
+      grid-column: 1 / 2;
+    }
+    
+    .edit-form input:nth-of-type(2) {
+      grid-column: 2 / 3;
+    }
+    
+    .edit-form input:nth-of-type(3) {
+      grid-column: 1 / 3;
+    }
+    
+    .edit-form button {
+      margin-top: 1rem !important;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .customer-history {
+      padding: 1rem;
+      margin: 1rem;
+    }
+    
+    .history-controls {
+      flex-direction: column;
+    }
+    
+    .customer-history li {
+      padding: 1rem;
+    }
+    
+    .history-actions {
+      margin-top: 1rem;
+    }
+  }
