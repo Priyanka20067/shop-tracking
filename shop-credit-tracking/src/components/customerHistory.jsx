@@ -1,7 +1,40 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './MainPage';
+import './style.css';
+
 
 function CustomerHistory() {
+
+  const [credits, setCredits] = useState(JSON.parse(localStorage.getItem('credits')) || []);
+  const [name, setName] = useState('');
+  const [items, setItems] = useState('');
+  const [phone, setPhone] = useState('');
+  const [amount, setAmount] = useState('');
+
+
+  useEffect(() => {
+    localStorage.setItem('credits', JSON.stringify(credits));
+  }, [credits]);
+
+
+
+  const handleNotification = (credit) => {
+    alert(
+      `Sending SMS to ${credit.name} (${credit.phone}):\nYou owe ₹${credit.amount.toFixed(2)} for items: ${credit.items.join(', ')}`
+    );
+  };
+
+  const deleteCredit = (index) => {
+    const newCredits = [...credits];
+    newCredits.splice(index, 1);
+    setCredits(newCredits);
+  };
+
+  const totalCredit = credits.reduce((sum, credit) => sum + credit.amount, 0);
+
+
+
   const [history, setHistory] = useState([]);
   const [filteredHistory, setFilteredHistory] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -93,6 +126,29 @@ function CustomerHistory() {
         <button onClick={() => navigate('/')}>Back to Home</button>
       </div>
       {/* Add history */}
+      <div>
+        
+
+      <ul>
+        {credits.map((credit, index) => (
+          <li key={credit.id} className={index === credits.length - 1 ? 'highlight' : ''}>
+            <div>
+              <strong>{credit.name}</strong>: ₹{credit.amount.toFixed(2)}
+              <br />
+              {credit.items && credit.items.length > 0 && (
+                <small>Items: {credit.items.join(', ')}</small>
+              )}
+              <br />
+              <small>Date: {credit.date} {credit.phone && `| Phone: ${credit.phone}`}</small>
+            </div>
+            
+            <button onClick={() => handleNotification(credit)}>Send Notification</button>
+            <button onClick={() => handleEdit(credit)}>Edit</button>
+            <button onClick={() => deleteCredit(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+      </div>
 
       <div className="summary">
         <h3>Total Historical Credit: ₹{totalHistoryCredit.toFixed(2)}</h3>
