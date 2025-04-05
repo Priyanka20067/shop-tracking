@@ -53,6 +53,7 @@ function CreditTracker({ navigate }) {
   const [phone, setPhone] = useState('');
   const [amount, setAmount] = useState('');
   const [editId, setEditId] = useState(null); // Track credit being edited
+  const [value , setValue] = useState('');
 
   useEffect(() => {
     localStorage.setItem('credits', JSON.stringify(credits));
@@ -70,6 +71,8 @@ function CreditTracker({ navigate }) {
                 amount: parseFloat(amount),
                 items: items ? items.split(',').map(item => item.trim()) : [],
                 phone,
+                date: new Date().toLocaleDateString(),
+                value: true // 👈 This line is important
               }
             : credit
         );
@@ -103,6 +106,8 @@ function CreditTracker({ navigate }) {
     setPhone(credit.phone);
     setAmount(credit.amount.toString());
     setEditId(credit.id);
+    setValue(true);
+  V
   };
 
   const handleNotification = (credit) => {
@@ -112,11 +117,12 @@ function CreditTracker({ navigate }) {
   };
 
   const deleteCredit = (index) => {
-    const newCredits = [...credits];
-    newCredits.splice(index, 1);
-    setCredits(newCredits);
+    const updatedCredits = credits.map((credit, i) =>
+      i === index ? { ...credit, value: false } : credit
+    );
+    setCredits(updatedCredits);
   };
-
+  
   const totalCredit = credits.reduce((sum, credit) => sum + credit.amount, 0);
 
   return (
@@ -166,7 +172,9 @@ function CreditTracker({ navigate }) {
     </div>
 
       <ul>
-        {credits.map((credit, index) => (
+      {credits
+  .filter((credit) => credit.value !== false) // only show if not false
+  .map((credit, index) => (
           <li key={credit.id} className={index === credits.length - 1 ? 'highlight' : ''}>
             <div>
               <strong>{credit.name}</strong>: ₹{credit.amount.toFixed(2)}
