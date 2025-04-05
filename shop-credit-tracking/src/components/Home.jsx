@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import logo from '../assets/logo.png';
+import React from 'react';
 import "../components/hom.css";
 
 function Header() {
@@ -8,7 +7,6 @@ function Header() {
       <header>
         <div className='header'>
           <h1>Welcome to Shop Credit & Tracking</h1>
-          <p>Your one-stop solution for managing shop credits and tasks.</p>
         </div>
         <div className="profile-container">
           <img
@@ -31,48 +29,13 @@ function Header() {
 }
 
 function Home() {
-  const [iframeKey, setIframeKey] = useState(0);
-
-  const reloadIframe = () => {
-    setIframeKey(prev => prev + 1);
-  };
+  
 
   return (
     <div>
       <Header />
 
-      {/* 🔽 IFRAME SECTION HERE 🔽 */}
-      <div style={{ padding: "20px" }}>
-        <h2 style={{ marginBottom: "10px" }}>Embedded App View</h2>
-
-        <iframe
-          key={iframeKey}
-          src="/main" // Use any route or external page here
-          title="Embedded Page"
-          style={{
-            width: "100%",
-            height: "500px",
-            border: "2px solid #333",
-            borderRadius: "10px"
-          }}
-        ></iframe>
-
-        <button
-          onClick={reloadIframe}
-          style={{
-            marginTop: "15px",
-            padding: "10px 20px",
-            fontSize: "16px",
-            cursor: "pointer",
-            backgroundColor: "#4CAF50",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px"
-          }}
-        >
-          🔁 Reload Embedded Page
-        </button>
-      </div>
+     
 
       {/* 🔽 REMAINING CONTENT BELOW 🔽 */}
       <main className="main-content">
