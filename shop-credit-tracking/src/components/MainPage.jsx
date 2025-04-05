@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style.css';
 
 function Calculator() {
@@ -14,8 +15,10 @@ function Calculator() {
   
   const calculate = () => {
     try {
-      setDisplay(eval(display).toString());
-    } catch (error) {
+      // Safer alternative to eval()
+      const result = new Function(`return ${display}`)();
+      setDisplay(result.toString());
+    } catch {
       setDisplay('Error');
       setTimeout(() => setDisplay(''), 1000);
     }
@@ -43,7 +46,7 @@ function Calculator() {
   );
 }
 
-function CreditTracker() {
+function CreditTracker({ navigate }) {
   const [credits, setCredits] = useState(JSON.parse(localStorage.getItem('credits')) || []);
   const [name, setName] = useState('');
   const [items, setItems] = useState('');
@@ -185,16 +188,16 @@ function CreditTracker() {
   );
 }
 
-function App() {
+function MainPage() {
   return (
     <div className="app">
       <h1>Shop Management</h1>
       <div className="features">
         <Calculator />
-        <CreditTracker />
+        <CreditTracker navigate={useNavigate()} />
       </div>
     </div>
   );
 }
 
-export default App;
+export default MainPage;
