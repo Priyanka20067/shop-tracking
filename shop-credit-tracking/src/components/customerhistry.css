@@ -1,4 +1,5 @@
 /* CustomerHistory Styles */
+@import "tailwindcss";
 :root {
     --deep-blue: #2C3E50;
     --mustard-yellow: #F4A261;

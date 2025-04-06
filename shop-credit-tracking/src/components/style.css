@@ -1,4 +1,5 @@
 /* Base styles with updated color theme */
+@import "tailwindcss";
 :root {
   --primary: #2C3E50;        /* Deep Blue */
   --primary-light: #3D5166;  /* Lighter shade for gradients */

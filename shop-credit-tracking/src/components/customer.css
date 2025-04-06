@@ -1,3 +1,5 @@
+
+@import "tailwindcss";
 .customer-page-container {
   max-width: 500px;
   margin: 20px auto;
