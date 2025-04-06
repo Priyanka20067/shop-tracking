@@ -1,0 +1,101 @@
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #f8f8f8;
+  }
+  
+  header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #222;
+    color: #fff;
+    position: relative;
+  }
+  
+  .title {
+    margin-left: 20px;
+    font-size: 1.8rem;
+  }
+  
+  .profile-container {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+  }
+  
+  .profile-pic {
+    width: 60px;
+    height: 60px;
+    border: 2px solid white;
+  }
+  
+  .menu {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  
+  .menu a {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    color: #333;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    text-decoration: none;
+    opacity: 0;
+    transform: translate(0, 0);
+    transition: all 0.3s ease;
+    pointer-events: auto;
+  }
+  
+  /* When menu is open, show links in circle around profile */
+  .menu.open a:nth-child(1) { transform: translate(100px, -20px); opacity: 1; }
+  .menu.open a:nth-child(2) { transform: translate(200px, -20px); opacity: 1; }
+  .menu.open a:nth-child(3) { transform: translate(300px, -20px); opacity: 1; }
+  .menu.open a:nth-child(4) { transform: translate(400px, -20px); opacity: 1; }
+  .menu.open a:nth-child(5) { transform: translate(500px, -20px); opacity: 1; }
+  
+  main {
+    padding: 30px;
+  }
+  
+  .content {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 30px auto;
+  }
+  
+  .content h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+  
+  .content p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  
+  .content ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .content li {
+    margin: 10px 0;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+  }
+  

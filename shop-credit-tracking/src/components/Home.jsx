@@ -1,10 +1,13 @@
 import React from 'react';
 import "../components/hom.css";
+import App from './Contact';
 
 function Header() {
   return (
+    
     <>
-      <header>
+    <App />
+      {/* <header>
         <div className='header'>
           <h1>Welcome to Shop Credit & Tracking</h1>
         </div>
@@ -23,7 +26,7 @@ function Header() {
             <a href='/main' title='Calculator'>🔢</a>
           </div>
         </div>
-      </header>
+      </header> */}
     </>
   );
 }

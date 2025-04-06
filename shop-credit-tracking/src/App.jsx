@@ -4,6 +4,7 @@ import Home from './components/Home';
 import CustomerForm from './components/customerform';
 import Signup from './components/signup';
 import CustomerHistory from './components/customerHistory';
+import Test from './components/test';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/customerform' element={<CustomerForm />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/customerhistory' element={<CustomerHistory />} />
+        <Route path='/test' element={<Test />} />
       </Routes>
     </Router>
   );
