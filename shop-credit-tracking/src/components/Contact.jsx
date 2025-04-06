@@ -17,11 +17,12 @@ function App() {
             className="profile-pic"
           />
           <div className={`menu ${menuOpen ? "open" : ""}`}>
-            <a href="#dashboard" title="Dashboard">📊</a>
+            <a href="/main" title="Dashboard">📊</a>
             <a href="#add" title="Add Customer">➕</a>
             <a href="#backup" title="Backup">☁️</a>
             <a href="#notifications" title="Notify">🔔</a>
             <a href="#pdf" title="PDF Report">📄</a>
+            
           </div>
         </div>
         <h1 className="title">Local Credit Manager</h1>
@@ -42,6 +43,7 @@ function App() {
             <li>💰 Track <strong>total credit</strong> and <strong>total collected</strong> amounts.</li>
             <li>🛠️ Future update: <strong>Move</strong> feature to be implemented soon!</li>
           </ul>
+          <button><a href="/main">Calculator</a> </button>
         </section>
       </main>
     </>

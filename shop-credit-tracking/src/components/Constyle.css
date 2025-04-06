@@ -1,4 +1,4 @@
-
+@import "tailwindcss";
 body {
     margin: 0;
     font-family: "Segoe UI", sans-serif;
@@ -73,7 +73,7 @@ body {
     padding: 20px 30px;
     border-radius: 12px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
+    max-width: 1150px;
     margin: 30px auto;
   }
   
