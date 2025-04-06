@@ -17,16 +17,35 @@ const downloadPDF = (customer) => {
     entry.type === 'credit' ? 'Credit' : 'Payment',
     entry.date,
     entry.items?.join(', ') || '-',
-    `₹${entry.amount.toFixed(2)}`,
+    `Rs. ${entry.amount.toFixed(2)}`,
   ]);
 
-  autoTable(doc, {
-    startY: 50,
-    head: [['#', 'Type', 'Date', 'Items', 'Amount']],
-    body: rows,
-  });
+ // 🔥 Table
+ autoTable(doc, {
+  startY: 50,
+  head: [['#', 'Type', 'Date', 'Items', 'Amount']],
+  body: rows,
+});
 
-  doc.save(`${customer.name}_statement.pdf`);
+// 🔍 Summary Calculation
+const totalCredit = customer.history
+  .filter((e) => e.type === 'credit')
+  .reduce((sum, e) => sum + e.amount, 0);
+
+const totalPaid = customer.history
+  .filter((e) => e.type === 'payment')
+  .reduce((sum, e) => sum + e.amount, 0);
+
+const balance = totalCredit - totalPaid;
+
+// 📄 Summary Text
+doc.setFontSize(12);
+const summaryY = doc.lastAutoTable.finalY + 10;
+doc.text(`Total Credit: Rs. ${totalCredit.toFixed(2)}`, 14, summaryY);
+doc.text(`Total Paid: Rs. ${totalPaid.toFixed(2)}`, 14, summaryY + 10);
+doc.text(`Balance Due: Rs. ${balance.toFixed(2)}`, 14, summaryY + 20);
+
+doc.save(`${customer.name}_statement.pdf`);
 };
 
 
