@@ -1,208 +1,103 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './MainPage';
 import './customerhistry.css';
 
-
 function CustomerHistory() {
-
-  const [credits, setCredits] = useState(JSON.parse(localStorage.getItem('credits')) || []);
-  const [name, setName] = useState('');
-  const [items, setItems] = useState('');
-  const [phone, setPhone] = useState('');
-  const [amount, setAmount] = useState('');
-
+  const [credits, setCredits] = useState(JSON.parse(localStorage.getItem('customers')) || []);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem('credits', JSON.stringify(credits));
   }, [credits]);
 
-
-
-  const handleNotification = (credit) => {
-    alert(
-      `Sending SMS to ${credit.name} (${credit.phone}):\nYou owe ₹${credit.amount.toFixed(2)} for items: ${credit.items.join(', ')}`
-    );
+  const loadData = () => {
+    try {
+      const allData = JSON.parse(localStorage.getItem('customers')) || [];
+      setCredits(allData);
+    } catch (error) {
+      console.error('Error loading history:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  const deleteCredit = (index) => {
-    const newCredits = [...credits];
-    newCredits.splice(index, 1);
-    setCredits(newCredits);
-  };
-
-  const totalCredit = credits.reduce((sum, credit) => sum + credit.amount, 0);
-
-
-
-  const [history, setHistory] = useState([]);
-  const [filteredHistory, setFilteredHistory] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [editId, setEditId] = useState(null);
-  const [editData, setEditData] = useState({
-    name: '',
-    amount: '',
-    items: '',
-    phone: ''
-  });
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
-    const loadData = () => {
-      try {
-        const storedData = JSON.parse(localStorage.getItem('customerHistory')) || [];
-        setHistory(storedData);
-        setFilteredHistory(storedData);
-      } catch (error) {
-        console.error('Error loading history:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     loadData();
   }, []);
+  
 
-  useEffect(() => {
-    const results = history.filter(credit =>
-      credit.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      credit.date.includes(searchTerm) ||
-      (credit.phone && credit.phone.includes(searchTerm))
+  const handleNotification = (customer) => {
+    const unpaid = customer.history.filter(entry => entry.value === true);
+    const totalUnpaid = unpaid.reduce((sum, item) => sum + item.amount, 0);
+    const latestItems = unpaid[unpaid.length - 1]?.items?.join(', ') || 'items';
+
+    alert(
+      `Sending SMS/WhatsApp to ${customer.name} (${customer.phone}):\n` +
+      `You owe ₹${totalUnpaid.toFixed(2)}. Please pay soon.\n` +
+      `Latest purchase: ${latestItems}`
     );
-    setFilteredHistory(results);
-  }, [searchTerm, history]);
-
-  const handleDelete = (id) => {
-    const updatedHistory = history.filter(credit => credit.id !== id);
-    setHistory(updatedHistory);
-    setFilteredHistory(updatedHistory);
-    localStorage.setItem('customerHistory', JSON.stringify(updatedHistory));
   };
 
-  const handleEdit = (credit) => {
-    setEditId(credit.id);
-    setEditData({
-      name: credit.name,
-      amount: credit.amount.toString(),
-      items: credit.items.join(', '),
-      phone: credit.phone || ''
-    });
+  const deleteCredit = (customerIndex, entryIndex) => {
+    const updatedCredits = [...credits];
+    updatedCredits[customerIndex].history.splice(entryIndex, 1);
+    setCredits(updatedCredits);
   };
 
-  const saveEdit = () => {
-    const updatedHistory = history.map(credit =>
-      credit.id === editId
-        ? {
-            ...credit,
-            name: editData.name,
-            amount: parseFloat(editData.amount),
-            items: editData.items.split(',').map(item => item.trim()),
-            phone: editData.phone
-          }
-        : credit
-    );
-    
-    setHistory(updatedHistory);
-    setFilteredHistory(updatedHistory);
-    localStorage.setItem('customerHistory', JSON.stringify(updatedHistory));
-    setEditId(null);
-  };
+  const totalHistoryCredit = credits.reduce((sum, customer) => {
+    return sum + customer.history.reduce((subSum, item) => subSum + item.amount, 0);
+  }, 0);
 
-  const totalHistoryCredit = filteredHistory.reduce((sum, credit) => sum + credit.amount, 0);
+  const filteredCredits = credits.filter(customer =>
+    customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    customer.phone.includes(searchTerm)
+  );
 
   if (isLoading) return <div className="loading">Loading history...</div>;
 
   return (
     <div className="customer-history">
       <h2>Customer History</h2>
-      
+
       <div className="history-controls">
         <input
           type="text"
-          placeholder="Search by name, date or phone"
+          placeholder="Search by name or phone"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button onClick={() => navigate('/')}>Back to Home</button>
       </div>
-      {/* Add history */}
-      <div>
-        
 
       <ul>
-        {credits.map((credit, index) => (
-          <li key={credit.id} className={index === credits.length - 1 ? 'highlight' : ''}>
+        {filteredCredits.map((customer, cIndex) => (
+          <li key={customer.name}>
             <div>
-              <strong>{credit.name}</strong>: ₹{credit.amount.toFixed(2)}
-              <br />
-              {credit.items && credit.items.length > 0 && (
-                <small>Items: {credit.items.join(', ')}</small>
-              )}
-              <br />
-              <small>Date: {credit.date} {credit.phone && `| Phone: ${credit.phone}`}</small>
+              <h3>{customer.name} ({customer.phone})</h3>
+              <button onClick={() => handleNotification(customer)}>Send Notification</button>
+              <ul>
+                {customer.history.map((entry, eIndex) => (
+                  <li
+                    key={eIndex}
+                    style={{ color: entry.value ? 'red' : 'green', marginBottom: '10px' }}
+                  >
+                    ₹{entry.amount} — {entry.items?.join(", ")} — {entry.date}
+                    <button onClick={() => deleteCredit(cIndex, eIndex)} style={{ marginLeft: '10px' }}>Delete</button>
+                  </li>
+                ))}
+              </ul>
             </div>
-            
-            <button onClick={() => handleNotification(credit)}>Send Notification</button>
-            <button onClick={() => handleEdit(credit)}>Edit</button>
-            <button onClick={() => deleteCredit(index)}>Delete</button>
           </li>
         ))}
       </ul>
-      </div>
 
       <div className="summary">
         <h3>Total Historical Credit: ₹{totalHistoryCredit.toFixed(2)}</h3>
-        <p>Showing {filteredHistory.length} of {history.length} records</p>
+        <p>Showing {filteredCredits.length} of {credits.length} customers</p>
       </div>
-
-      <ul>
-        {filteredHistory.map((credit) => (
-          <li key={credit.id}>
-            {editId === credit.id ? (
-              <div className="edit-form">
-                <input
-                  type="text"
-                  value={editData.name}
-                  onChange={(e) => setEditData({...editData, name: e.target.value})}
-                />
-                <input
-                  type="number"
-                  value={editData.amount}
-                  onChange={(e) => setEditData({...editData, amount: e.target.value})}
-                />
-                <input
-                  type="text"
-                  value={editData.items}
-                  onChange={(e) => setEditData({...editData, items: e.target.value})}
-                />
-                <input
-                  type="tel"
-                  value={editData.phone}
-                  onChange={(e) => setEditData({...editData, phone: e.target.value})}
-                />
-                <button onClick={saveEdit}>Save</button>
-                <button onClick={() => setEditId(null)}>Cancel</button>
-              </div>
-            ) : (
-              <div>
-                <strong>{credit.name}</strong>: ₹{credit.amount.toFixed(2)}
-                <br />
-                {credit.items && credit.items.length > 0 && (
-                  <small>Items: {credit.items.join(', ')}</small>
-                )}
-                <br />
-                <small>
-                  Date: {credit.date} {credit.phone && `| Phone: ${credit.phone}`}
-                </small>
-                <div className="history-actions">
-                  <button onClick={() => handleEdit(credit)}>Edit</button>
-                  <button onClick={() => handleDelete(credit.id)}>Delete</button>
-                </div>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
