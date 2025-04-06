@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../components/Customer.css";
+import "./Customer.css";
 
 const CustomerForm = () => {
   const [customer, setCustomer] = useState({
