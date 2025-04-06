@@ -4,18 +4,17 @@ import './style.css';
 
 function Calculator() {
   const [display, setDisplay] = useState('');
-  
+
   const appendToDisplay = (value) => {
     setDisplay((prev) => prev + value);
   };
-  
+
   const clearDisplay = () => {
     setDisplay('');
   };
-  
+
   const calculate = () => {
     try {
-      // Safer alternative to eval()
       const result = new Function(`return ${display}`)();
       setDisplay(result.toString());
     } catch {
@@ -23,10 +22,10 @@ function Calculator() {
       setTimeout(() => setDisplay(''), 1000);
     }
   };
-  
+
   const buttonValues = ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '=', '+'];
   const clearButton = 'C';
-  
+
   return (
     <div className="calculator">
       <h2>Calculator</h2>
@@ -47,50 +46,44 @@ function Calculator() {
 }
 
 function CreditTracker({ navigate }) {
-  const [credits, setCredits] = useState(JSON.parse(localStorage.getItem('credits')) || []);
+  const [customers, setCustomers] = useState(JSON.parse(localStorage.getItem('customers')) || []);
   const [name, setName] = useState('');
   const [items, setItems] = useState('');
   const [phone, setPhone] = useState('');
   const [amount, setAmount] = useState('');
-  const [editId, setEditId] = useState(null); // Track credit being edited
-  const [value , setValue] = useState('');
+  const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem('credits', JSON.stringify(credits));
-  }, [credits]);
+    localStorage.setItem('customers', JSON.stringify(customers));
+  }, [customers]);
 
   const addCredit = () => {
     if (name && amount) {
-      if (editId) {
-        // Update the existing credit
-        const updatedCredits = credits.map((credit) =>
-          credit.id === editId
-            ? {
-                ...credit,
-                name,
-                amount: parseFloat(amount),
-                items: items ? items.split(',').map(item => item.trim()) : [],
-                phone,
-                date: new Date().toLocaleDateString(),
-                value: true // 👈 This line is important
-              }
-            : credit
-        );
-        setCredits(updatedCredits);
-        setEditId(null);
+      const creditEntry = {
+        type: 'credit',
+        date: new Date().toLocaleDateString(),
+        items: items ? items.split(',').map(item => item.trim()) : [],
+        amount: parseFloat(amount),
+      };
+
+      const existingIndex = customers.findIndex(
+        (c) => c.name === name && c.phone === phone
+      );
+
+      if (existingIndex !== -1) {
+        const updatedCustomers = [...customers];
+        updatedCustomers[existingIndex].history.push(creditEntry);
+        setCustomers(updatedCustomers);
       } else {
-        // Add new credit
-        const newCredit = {
+        const newCustomer = {
           id: Date.now(),
           name,
-          amount: parseFloat(amount),
-          items: items ? items.split(',').map(item => item.trim()) : [],
           phone,
-          date: new Date().toLocaleDateString(),
+          history: [creditEntry],
         };
-        setCredits([...credits, newCredit]);
+        setCustomers([...customers, newCustomer]);
       }
-      // Clear input fields
+
       setName('');
       setItems('');
       setPhone('');
@@ -100,52 +93,49 @@ function CreditTracker({ navigate }) {
     }
   };
 
-  const handleEdit = (credit) => {
-    setName(credit.name);
-    setItems(credit.items.join(', '));
-    setPhone(credit.phone);
-    setAmount(credit.amount.toString());
-    setEditId(credit.id);
-    setValue(true);
-  V
+  const addPayment = (customerId) => {
+    const amountPaid = prompt('Enter amount paid:');
+    const value = parseFloat(amountPaid);
+    if (!value || isNaN(value) || value <= 0) return alert('Invalid amount');
+
+    const updated = customers.map((c) => {
+      if (c.id === customerId) {
+        return {
+          ...c,
+          history: [...c.history, {
+            type: 'payment',
+            date: new Date().toLocaleDateString(),
+            amount: value,
+          }],
+        };
+      }
+      return c;
+    });
+    setCustomers(updated);
   };
 
-  const handleNotification = (credit) => {
-    alert(
-      `Sending SMS to ${credit.name} (${credit.phone}):\nYou owe ₹${credit.amount.toFixed(2)} for items: ${credit.items.join(', ')}`
-    );
+  const calculateUnpaid = (history) => {
+    const credit = history.filter(h => h.type === 'credit').reduce((sum, h) => sum + h.amount, 0);
+    const paid = history.filter(h => h.type === 'payment').reduce((sum, h) => sum + h.amount, 0);
+    return credit - paid;
   };
 
-  const deleteCredit = (index) => {
-    const updatedCredits = credits.map((credit, i) =>
-      i === index ? { ...credit, value: false } : credit
-    );
-    setCredits(updatedCredits);
-  };
-  
-  const totalCredit = credits.reduce((sum, credit) => sum + credit.amount, 0);
+  const totalCredit = customers.reduce(
+    (sum, customer) => sum + calculateUnpaid(customer.history),
+    0
+  );
 
   return (
     <div className="todo-list">
       <h2>Credit Tracker</h2>
-      
+
       <div className="summary">
         <h3>Total Credit: ₹{totalCredit.toFixed(2)}</h3>
       </div>
-      
+
       <div className="input-group">
-        <input 
-          type="text" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-          placeholder="Customer Name" 
-        />
-        <input
-          type="text"
-          value={items}
-          onChange={(e) => setItems(e.target.value)}
-          placeholder="Items (e.g., milk, bread)"
-        />
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Customer Name" />
+        <input type="text" value={items} onChange={(e) => setItems(e.target.value)} placeholder="Items (e.g., milk, bread)" />
         <input
           type="tel"
           value={phone}
@@ -156,41 +146,30 @@ function CreditTracker({ navigate }) {
           placeholder="Phone (10 digits)"
           maxLength={10}
         />
-        <input 
-          type="number" 
-          value={amount} 
-          onChange={(e) => setAmount(e.target.value)} 
-          placeholder="Credit Amount" 
-        />
+        <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Credit Amount" />
         <button onClick={addCredit}>{editId ? 'Update Credit' : 'Add Credit'}</button>
       </div>
+
       <div className="history-container">
-      <button className="history-button" onClick={() => navigate("/customerhistory")}>
-        History
-      </button>
-      <button className="plus-symbol" onClick={() => navigate("/customerform")}>+</button>
-    </div>
+        <button className="history-button" onClick={() => navigate("/customerhistory")}>History</button>
+        <button className="plus-symbol" onClick={() => navigate("/customerform")}>+</button>
+      </div>
 
       <ul>
-      {credits
-  .filter((credit) => credit.value !== false) // only show if not false
-  .map((credit, index) => (
-          <li key={credit.id} className={index === credits.length - 1 ? 'highlight' : ''}>
-            <div>
-              <strong>{credit.name}</strong>: ₹{credit.amount.toFixed(2)}
-              <br />
-              {credit.items && credit.items.length > 0 && (
-                <small>Items: {credit.items.join(', ')}</small>
-              )}
-              <br />
-              <small>Date: {credit.date} {credit.phone && `| Phone: ${credit.phone}`}</small>
-            </div>
-            
-            <button onClick={() => handleNotification(credit)}>Send Notification</button>
-            <button onClick={() => handleEdit(credit)}>Edit</button>
-            <button onClick={() => deleteCredit(index)}>Delete</button>
-          </li>
-        ))}
+        {customers.map((customer) => {
+          const unpaid = calculateUnpaid(customer.history);
+          if (unpaid <= 0) return null;
+          return (
+            <li key={customer.id}>
+              <div>
+                <strong>{customer.name}</strong>: ₹{unpaid.toFixed(2)}
+                <br />
+                <small>Phone: {customer.phone}</small>
+              </div>
+              <button onClick={() => addPayment(customer.id)}>Pay Amount</button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
