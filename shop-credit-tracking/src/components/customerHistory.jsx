@@ -1,6 +1,36 @@
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './customerhistry.css';
+
+const downloadPDF = (customer) => {
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text(`Credit Statement for ${customer.name}`, 14, 20);
+  doc.setFontSize(12);
+  doc.text(`Phone: ${customer.phone}`, 14, 30);
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 40);
+
+  const rows = customer.history.map((entry, index) => [
+    index + 1,
+    entry.type === 'credit' ? 'Credit' : 'Payment',
+    entry.date,
+    entry.items?.join(', ') || '-',
+    `₹${entry.amount.toFixed(2)}`,
+  ]);
+
+  autoTable(doc, {
+    startY: 50,
+    head: [['#', 'Type', 'Date', 'Items', 'Amount']],
+    body: rows,
+  });
+
+  doc.save(`${customer.name}_statement.pdf`);
+};
+
+
+
 
 function CustomerHistory() {
   const [credits, setCredits] = useState(JSON.parse(localStorage.getItem('customers')) || []);
@@ -69,6 +99,7 @@ function CustomerHistory() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+
         <button onClick={() => navigate('/')}>Back to Home</button>
       </div>
 
@@ -78,6 +109,11 @@ function CustomerHistory() {
             <div>
               <h3>{customer.name} ({customer.phone})</h3>
               <button onClick={() => handleNotification(customer)}>Send Notification</button>
+              <button onClick={() => downloadPDF(customer)} style={{ marginLeft: '10px' }}>
+  Download PDF
+</button>
+
+
               <ul>
                 {customer.history.map((entry, eIndex) => (
                   <li
