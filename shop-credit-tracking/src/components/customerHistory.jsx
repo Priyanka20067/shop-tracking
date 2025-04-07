@@ -106,18 +106,31 @@ function CustomerHistory() {
   // );
   // paid and unpaid for history
 
-  const [showUnpaidOnly, setShowUnpaidOnly] = useState(false);
+  
+  const [filterOption, setFilterOption] = useState('all');
+  // const [showUnpaidOnly, setShowUnpaidOnly] = useState(false);
 
-const filteredCredits = credits.filter(customer => {
-  const matchesSearch = customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        customer.phone.includes(searchTerm);
+  const filteredCredits = credits.filter(customer => {
+    const searchMatch =
+      customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      customer.phone.includes(searchTerm) ||
+      customer.history.some(entry =>
+        entry.date.includes(searchTerm)
+      );
+  
+    if (!searchMatch) return false;
+  
+    if (filterOption === 'unpaid') {
+      return customer.history.some(entry => entry.value === true);
+    } else if (filterOption === 'paid') {
+      return customer.history.every(entry => entry.value === false);
+    }
+  
+    return true; // default: show all
+  });
+  
 
-  const hasUnpaid = customer.history.some(entry => entry.value === true);
 
-  return showUnpaidOnly ? matchesSearch && hasUnpaid : matchesSearch;
-});
-
-const [filterOption, setFilterOption] = useState('all');
 
   if (isLoading) return <div className="loading">Loading history...</div>;
 
@@ -131,14 +144,12 @@ const [filterOption, setFilterOption] = useState('all');
           placeholder="Search by name or phone"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-        /><label>
-        <input 
-          type="checkbox"
-          checked={showUnpaidOnly}
-          onChange={() => setShowUnpaidOnly(!showUnpaidOnly)}
-        />
-        Show Unpaid Only
-      </label>
+        /><select value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
+        <option value="all">All</option>
+        <option value="unpaid">Unpaid</option>
+        <option value="paid">Paid</option>
+      </select>
+      
       
 
         <button onClick={() => navigate('/')}>Back to Home</button>

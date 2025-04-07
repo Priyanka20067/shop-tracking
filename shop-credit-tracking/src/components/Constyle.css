@@ -10,7 +10,7 @@ header {
     display: flex;
     align-items: center;
     padding: 20px;
-    background: #222;
+    background: #e17676;
     color: #fff;
     position: relative;
 }
@@ -27,10 +27,19 @@ header {
     cursor: pointer;
 }
 
+.profile-container div{
+    background-color: #fff;
+    border-radius: 20%;
+}
+
 .profile-pic {
     width: 60px;
     height: 60px;
+    border-radius: 20%;
+    border: none;
+    background-color: transparent;
 }
+
 
 .menu {
     position: absolute;
