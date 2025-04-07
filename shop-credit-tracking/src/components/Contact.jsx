@@ -10,15 +10,16 @@ function App() {
     <>
       <header>
         <div className="profile-container" onClick={toggleMenu}>
-          
+          <div className="prfile-div">
           <img
             src={myImage}
             alt="Profile"
             className="profile-pic"
           />
+          </div>
           <div className={`menu ${menuOpen ? "open" : ""}`}>
             <a href="/main" title="Dashboard">📊</a>
-            <a href="#add" title="Add Customer">➕</a>
+            <a href="/customerform" title="Add Customer">➕</a>
             <a href="#backup" title="Backup">☁️</a>
             <a href="#notifications" title="Notify">🔔</a>
             <a href="#pdf" title="PDF Report">📄</a>
