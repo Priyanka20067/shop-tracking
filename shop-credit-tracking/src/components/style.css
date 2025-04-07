@@ -333,7 +333,8 @@ h2 {
 .history-container {
   display: flex;
   align-items: center;
-  gap: 10px; /* Space between button and plus symbol */
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .history-button {
@@ -344,20 +345,23 @@ h2 {
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
-  font-size: 16px;
+  font-size: 18px;
+ font-weight: bold;
 }
 
 .history-button:hover {
   background-color: #0056b3;
+  color:rgb(236, 223, 223);
 }
 
 .plus-symbol {
-  font-size: 24px;
+  font-size: 29px;
   font-weight: bold;
-  color: #007bff;
+  color: white;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .plus-symbol:hover {
-  color: #0056b3;
+  color:rgb(236, 223, 223);
 }
