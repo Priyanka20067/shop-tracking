@@ -10,7 +10,7 @@ function App() {
     <>
       <header>
         <div className="profile-container" onClick={toggleMenu}>
-          <div className="prfile-div">
+          <div className="porfile-div">
           <img
             src={myImage}
             alt="Profile"

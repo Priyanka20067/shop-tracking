@@ -24,8 +24,8 @@ header {
     display: flex;
     align-items: center;
     padding: 20px;
-    background: linear-gradient(135deg, #2C3E50, #1a2a38);
-    color: #FAF3E0;
+    background: #222;
+    color: #fff;
     position: relative;
     box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
 }
@@ -66,18 +66,16 @@ header {
     transform: scale(1.1);
 }
 
+.profile-container div{
+    background-color: #fff;
+    border-radius: 20%;
+}
+
 .profile-pic {
     width: 60px;
     height: 60px;
-    border: none;
-    border-radius: 0%;
-    box-shadow: 0 0 0 3px #F4A261; /* Mustard Yellow border */
-    transition: all 0.3s ease;
 }
 
-.profile-pic:hover {
-    box-shadow: 0 0 0 5px #F4A261, 0 0 20px rgba(244, 162, 97, 0.6);
-}
 
 .menu {
     position: absolute;
