@@ -100,10 +100,24 @@ function CustomerHistory() {
     return sum + customer.history.reduce((subSum, item) => subSum + item.amount, 0);
   }, 0);
 
-  const filteredCredits = credits.filter(customer =>
-    customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.phone.includes(searchTerm)
-  );
+  // const filteredCredits = credits.filter(customer =>
+  //   customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //   customer.phone.includes(searchTerm)
+  // );
+  // paid and unpaid for history
+
+  const [showUnpaidOnly, setShowUnpaidOnly] = useState(false);
+
+const filteredCredits = credits.filter(customer => {
+  const matchesSearch = customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        customer.phone.includes(searchTerm);
+
+  const hasUnpaid = customer.history.some(entry => entry.value === true);
+
+  return showUnpaidOnly ? matchesSearch && hasUnpaid : matchesSearch;
+});
+
+const [filterOption, setFilterOption] = useState('all');
 
   if (isLoading) return <div className="loading">Loading history...</div>;
 
@@ -117,7 +131,15 @@ function CustomerHistory() {
           placeholder="Search by name or phone"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+        /><label>
+        <input 
+          type="checkbox"
+          checked={showUnpaidOnly}
+          onChange={() => setShowUnpaidOnly(!showUnpaidOnly)}
         />
+        Show Unpaid Only
+      </label>
+      
 
         <button onClick={() => navigate('/')}>Back to Home</button>
       </div>
