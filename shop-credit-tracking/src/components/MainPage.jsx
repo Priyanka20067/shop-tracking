@@ -62,6 +62,7 @@ function CreditTracker({ navigate }) {
       const creditEntry = {
         type: 'credit',
         date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(), // Added time
         items: items ? items.split(',').map(item => item.trim()) : [],
         amount: parseFloat(amount),
       };
@@ -105,6 +106,7 @@ function CreditTracker({ navigate }) {
           history: [...c.history, {
             type: 'payment',
             date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(), // Added time
             amount: value,
           }],
         };
