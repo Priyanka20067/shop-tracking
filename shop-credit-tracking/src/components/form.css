@@ -1,0 +1,324 @@
+
+/* Theme Colors */
+:root {
+    --deep-blue: #2C3E50;
+    --mustard-yellow: #F4A261;
+    --soft-cream: #FAF3E0;
+    --dark-blue: #1A2533;
+    --light-yellow: #F6B584;
+  }
+  
+  /* Base Styles */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--soft-cream);
+    margin: 0;
+    padding: 0;
+  }
+  
+  .customer-page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .customer-page-container {
+      flex-direction: row;
+    }
+  }
+  
+  /* Form Section */
+  .form-section {
+    flex: 1;
+    background: linear-gradient(135deg, var(--deep-blue), var(--dark-blue));
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: white;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  .form-section h2 {
+    color: var(--mustard-yellow);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    position: relative;
+  }
+  
+  .form-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: var(--mustard-yellow);
+    animation: expandWidth 1.5s ease-in-out infinite;
+  }
+  
+  .customer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: var(--soft-cream);
+    font-size: 1rem;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 0.8rem;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--mustard-yellow);
+    box-shadow: 0 0 0 2px rgba(244, 162, 97, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: #999;
+  }
+  
+  .form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .submit-btn {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: linear-gradient(to right, var(--mustard-yellow), var(--light-yellow));
+    color: var(--deep-blue);
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(244, 162, 97, 0.4);
+  }
+  
+  .submit-btn:active {
+    transform: translateY(-1px);
+  }
+  
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.6s ease;
+  }
+  
+  .submit-btn:hover::before {
+    left: 100%;
+  }
+  
+  /* Contacts Section */
+  .contacts-section {
+    flex: 1;
+    background: linear-gradient(to bottom right, var(--soft-cream), #fff);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.8s ease-in-out;
+  }
+  
+  .contacts-section h2 {
+    color: var(--deep-blue);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+  
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .contact-item {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--mustard-yellow);
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact-item strong {
+    display: block;
+    color: var(--deep-blue);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact-item p {
+    margin: 0.3rem 0;
+    color: #555;
+  }
+  
+  .btn-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .edit-btn {
+    background-color: var(--deep-blue);
+    color: white;
+  }
+  
+  .edit-btn:hover {
+    background-color: var(--dark-blue);
+    transform: translateY(-2px);
+  }
+  
+  .delete-btn {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+  }
+  
+  .clear-btn {
+    background-color: var(--deep-blue);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .clear-btn:hover {
+    background-color: var(--dark-blue);
+    transform: translateY(-2px);
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes expandWidth {
+    0%, 100% {
+      width: 50px;
+    }
+    50% {
+      width: 100px;
+    }
+  }
+  
+  /* Adding animated gradients to empty state */
+  .contacts-section p {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(45deg, var(--soft-cream), white, var(--soft-cream));
+    background-size: 200% 200%;
+    animation: gradientBG 5s ease infinite;
+    border-radius: 6px;
+    color: var(--deep-blue);
+    font-style: italic;
+  }
+  
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Add hover effects */
+  .form-group:hover label {
+    color: var(--mustard-yellow);
+    transition: color 0.3s ease;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .customer-page-container {
+      padding: 0.5rem;
+    }
+    
+    .form-section,
+    .contacts-section {
+      border-radius: 8px;
+      padding: 1rem;
+    }
+  }
