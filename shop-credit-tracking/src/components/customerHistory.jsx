@@ -55,13 +55,14 @@ function CustomerHistory() {
   const [credits, setCredits] = useState(JSON.parse(localStorage.getItem('customers')) || []);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [expandedCustomer, setExpandedCustomer] = useState(null); // Track expanded customer
   const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem('credits', JSON.stringify(credits));
   }, [credits]);
 
-  const loadData = () => {
+  useEffect(() => {
     try {
       const allData = JSON.parse(localStorage.getItem('customers')) || [];
       setCredits(allData);
@@ -70,17 +71,13 @@ function CustomerHistory() {
     } finally {
       setIsLoading(false);
     }
-  };
-  
-
-  useEffect(() => {
-    loadData();
   }, []);
+  
   
 
   const handleNotification = (customer) => {
-    const unpaid = customer.history.filter(entry => entry.value === true);
-    const totalUnpaid = unpaid.reduce((sum, item) => sum + item.amount, 0);
+    const unpaid = customer.history.filter(entry => entry.value === 'credit');
+    const totalUnpaid = unpaid.reduce((sum, item) => sum + item.amount, 0) - customer.history.filter(entry => entry.type === 'payment').reduce((sum, item) => sum +item.amount, 0);
     const latestItems = unpaid[unpaid.length - 1]?.items?.join(', ') || 'items';
 
     alert(
@@ -100,6 +97,10 @@ function CustomerHistory() {
     return sum + customer.history.reduce((subSum, item) => subSum + item.amount, 0);
   }, 0);
 
+  const toggleExpand = (customerId) => {
+    setExpandedCustomer(expandedCustomer === customerId ? null : customerId);
+  };
+
   // const filteredCredits = credits.filter(customer =>
   //   customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
   //   customer.phone.includes(searchTerm)
@@ -118,21 +119,22 @@ function CustomerHistory() {
         entry.date.includes(searchTerm)
       );
   
-    if (!searchMatch) return false;
+      if (!searchMatch) return false;
+
+      const unpaidBalance = customer.history.reduce((sum, entry) => 
+        entry.type === 'credit' ? sum + entry.amount : sum - entry.amount, 0
+      );
   
-    if (filterOption === 'unpaid') {
-      return customer.history.some(entry => entry.value === true);
-    } else if (filterOption === 'paid') {
-      return customer.history.every(entry => entry.value === false);
-    }
+      if (filterOption === 'unpaid') return unpaidBalance > 0;
+      if (filterOption === 'paid') return unpaidBalance <= 0;
+      return true;
+    });
   
-    return true; // default: show all
-  });
-  
+    if (isLoading) return <div className="loading">Loading history...</div>;
 
 
 
-  if (isLoading) return <div className="loading">Loading history...</div>;
+
 
   return (
     <div className="customer-history">
@@ -141,7 +143,7 @@ function CustomerHistory() {
       <div className="history-controls">
         <input
           type="text"
-          placeholder="Search by name or phone"
+          placeholder="Search by name or phone or date"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         /><select value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
@@ -152,38 +154,68 @@ function CustomerHistory() {
       
       
 
-        <button onClick={() => navigate('/')}>Back to Home</button>
+        <button onClick={() => navigate('/main')}>Back to Credit Tracker</button>
       </div>
 
       <ul>
-        {filteredCredits.map((customer, cIndex) => (
-          <li key={customer.name}>
-            <div>
+        {filteredCredits.map((customer) => (
+          <li key={customer.id}>
+            <div className="customer-header">
+              <button 
+                onClick={() => toggleExpand(customer.id)}
+                style={{ marginRight: '10px' }}
+              >
+                {expandedCustomer === customer.id ? '▼' : '▶'}
+              </button>
               <h3>{customer.name} ({customer.phone})</h3>
-              <button onClick={() => handleNotification(customer)}>Send Notification</button>
-              <button onClick={() => downloadPDF(customer)} style={{ marginLeft: '10px' }}>
-  Download PDF
-</button>
+              {expandedCustomer !== customer.id && (
+                <>
+                  <button 
+                    onClick={() => handleNotification(customer)} 
+                    style={{ marginLeft: '10px' }}
+                  >
+                    Send Notification
+                  </button>
+                  <button 
+                    onClick={() => downloadPDF(customer)} 
+                    style={{ marginLeft: '10px' }}
+                  >
+                    Download PDF
+                  </button>
+                </>
+              )}
+            </div>
 
-
+            {expandedCustomer === customer.id && (
               <ul>
                 {customer.history.map((entry, eIndex) => (
                   <li
                     key={eIndex}
-                    style={{ color: entry.value ? 'red' : 'green', marginBottom: '10px' }}
+                    style={{ 
+                      color: entry.type === 'credit' ? 'red' : 'green', 
+                      marginBottom: '10px' 
+                    }}
                   >
-                    ₹{entry.amount} — {entry.items?.join(", ")} — {entry.date}
-                    <button onClick={() => deleteCredit(cIndex, eIndex)} style={{ marginLeft: '10px' }}>Delete</button>
+                    ₹{entry.amount.toFixed(2)} — {entry.items?.join(", ") || '-'} — 
+                    {entry.date} {entry.time || ''}
+                    {/* <button 
+                      onClick={() => deleteCredit(credits.findIndex(c => c.id === customer.id), eIndex)} 
+                      style={{ marginLeft: '10px' }}
+                    >
+                      Delete
+                    </button> */}
                   </li>
                 ))}
               </ul>
-            </div>
+            )}
           </li>
         ))}
       </ul>
-
       <div className="summary">
-        <h3>Total Historical Credit: ₹{totalHistoryCredit.toFixed(2)}</h3>
+        <h3>Total Historical Credit: ₹{credits.reduce((sum, c) => 
+          sum + c.history.reduce((s, i) => 
+            i.type === 'credit' ? s + i.amount : s - i.amount, 0), 0
+        ).toFixed(2)}</h3>
         <p>Showing {filteredCredits.length} of {credits.length} customers</p>
       </div>
     </div>
