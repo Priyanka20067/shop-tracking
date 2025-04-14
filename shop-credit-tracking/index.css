@@ -1,0 +1,22 @@
+:root {
+    --bg: #F5F7FA;
+    --card-bg: #FFFFFF;
+    --text: #2D3748;
+    --primary: #3182CE;
+    --success: #38A169;
+    --danger: #E53E3E;
+    --accent: #ECC94B;
+  }
+  .dark {
+    --bg: #2D3748;
+    --card-bg: #4A5568;
+    --text: #EDF2F7;
+    --primary: #63B3ED;
+    --success: #68D391;
+    --danger: #FC8181;
+    --accent: #F6E05E;
+  }
+  body.dark-mode {
+    background: var(--bg);
+    color: var(--text);
+  }
