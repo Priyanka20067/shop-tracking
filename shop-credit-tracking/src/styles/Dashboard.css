@@ -1,0 +1,59 @@
+/* checked-1 */
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: var(--bg);
+}
+.dashboard-nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.dashboard-nav button {
+  background: var(--primary);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.dashboard-nav button:hover {
+  background: #1976d2;
+}
+section {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+section h2 {
+  margin-top: 0;
+}
+section button {
+  background: var(--success);
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+section button a {
+  color: white;
+  text-decoration: none;
+}
+section button:hover {
+  background: #388e3c;
+}
+section ul {
+  list-style: none;
+  padding: 0;
+}
+section ul li {
+  padding: 5px 0;
+}
+#analytics p,
+#analytics ul {
+  margin: 10px 0;
+}

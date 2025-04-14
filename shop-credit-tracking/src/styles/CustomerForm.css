@@ -1,0 +1,88 @@
+/* checked-1 */
+.customer-form-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: var(--bg);
+}
+.form-section {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.customer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  margin-bottom: 5px;
+}
+.form-group input,
+.form-group textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.submit-btn {
+  background: var(--primary);
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.submit-btn:hover {
+  background: #1976d2;
+}
+.contacts-section {
+  margin-top: 20px;
+}
+.search-bar {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.contact-list {
+  list-style: none;
+  padding: 0;
+}
+.contact-item {
+  background: var(--card-bg);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.customer-header {
+  display: flex;
+  align-items: center;
+}
+.customer-details {
+  padding-left: 20px;
+}
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+.edit-btn {
+  background: var(--success);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+}
+.delete-btn {
+  background: var(--danger);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+}
