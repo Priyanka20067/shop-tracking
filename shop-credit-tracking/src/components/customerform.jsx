@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-//  import "./customform.css";
 import './form.css';
 
 const CustomerForm = () => {
@@ -8,20 +7,35 @@ const CustomerForm = () => {
     email: "",
     phone: "",
     address: "",
+    history: [],
   });
-  const [contacts, setContacts] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [editId, setEditId] = useState(null);
+  const [expandedCustomer, setExpandedCustomer] = useState(null);
 
   // Load from localStorage
   useEffect(() => {
-    const storedContacts = JSON.parse(localStorage.getItem("contacts")) || [];
-    setContacts(storedContacts);
+    try {
+      const storedCustomers = JSON.parse(localStorage.getItem("customers")) || [];
+      console.log("CustomerForm: Loaded customers", storedCustomers); // Debug
+      setCustomers(storedCustomers);
+    } catch (error) {
+      console.error("CustomerForm: Error loading customers", error);
+      setCustomers([]);
+    }
   }, []);
 
   // Save to localStorage
   useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
+    if (customers.length > 0) {
+      try {
+        console.log("CustomerForm: Saving customers", customers); // Debug
+        localStorage.setItem("customers", JSON.stringify(customers));
+      } catch (error) {
+        console.error("CustomerForm: Error saving customers", error);
+      }
+    }
+  }, [customers]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,39 +44,55 @@ const CustomerForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!customer.name || !customer.email || !customer.phone || !customer.address) {
+      alert("Please fill all required fields!");
+      return;
+    }
 
     if (editId !== null) {
-      setContacts((prev) =>
-        prev.map((c) => (c.id === editId ? { ...customer, id: editId } : c))
+      setCustomers((prev) =>
+        prev.map((c) =>
+          c.id === editId
+            ? { ...customer, id: editId, history: c.history || [] }
+            : c
+        )
       );
       setEditId(null);
     } else {
-      setContacts((prev) => [...prev, { ...customer, id: Date.now() }]);
+      setCustomers((prev) => [
+        ...prev,
+        { ...customer, id: Date.now(), history: customer.history || [] },
+      ]);
     }
 
-    setCustomer({ name: "", email: "", phone: "", address: "" });
+    setCustomer({ name: "", email: "", phone: "", address: "", history: [] });
   };
 
   const handleEdit = (id) => {
-    const contactToEdit = contacts.find((c) => c.id === id);
-    setCustomer(contactToEdit);
-    setEditId(id);
+    const customerToEdit = customers.find((c) => c.id === id);
+    if (customerToEdit) {
+      setCustomer({ ...customerToEdit, history: customerToEdit.history || [] });
+      setEditId(id);
+    }
   };
 
   const handleDelete = (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this contact?"
-    );
+    const confirmDelete = window.confirm("Are you sure you want to delete this customer?");
     if (confirmDelete) {
-      setContacts((prev) => prev.filter((c) => c.id !== id));
+      setCustomers((prev) => prev.filter((c) => c.id !== id));
     }
   };
 
   const handleClearAll = () => {
-    const confirmClear = window.confirm("Clear all contacts?");
+    const confirmClear = window.confirm("Clear all customers?");
     if (confirmClear) {
-      setContacts([]);
+      setCustomers([]);
+      localStorage.setItem("customers", JSON.stringify([]));
     }
+  };
+
+  const toggleExpand = (id) => {
+    setExpandedCustomer(expandedCustomer === id ? null : id);
   };
 
   return (
@@ -104,6 +134,7 @@ const CustomerForm = () => {
               onChange={handleChange}
               required
               placeholder="Enter phone number"
+              maxLength={10}
             />
           </div>
           <div className="form-group">
@@ -117,7 +148,6 @@ const CustomerForm = () => {
               placeholder="Enter customer address"
             />
           </div>
-
           <button type="submit" className="submit-btn">
             {editId ? "Update Customer" : "Add Customer"}
           </button>
@@ -125,35 +155,71 @@ const CustomerForm = () => {
       </div>
 
       <div className="contacts-section">
-        <h2>Contact List</h2>
-        {contacts.length === 0 ? (
-          <p>No contacts yet</p>
+        <h2>Customer List</h2>
+        {customers.length === 0 ? (
+          <p>No customers yet</p>
         ) : (
           <>
             <button onClick={handleClearAll} className="clear-btn">
               Clear All
             </button>
             <ul className="contact-list">
-              {contacts.map((contact) => (
-                <li key={contact.id} className="contact-item">
-                  <strong>{contact.name}</strong>
-                  <p>Email: {contact.email}</p>
-                  <p>Phone: {contact.phone}</p>
-                  <p>Address: {contact.address}</p>
-                  <div className="btn-group">
+              {customers.map((customer) => (
+                <li key={customer.id} className="contact-item">
+                  <div className="customer-header">
                     <button
-                      onClick={() => handleEdit(contact.id)}
-                      className="edit-btn"
+                      onClick={() => toggleExpand(customer.id)}
+                      style={{ marginRight: "10px", background: "none", border: "none", cursor: "pointer" }}
                     >
-                      Edit
+                      {expandedCustomer === customer.id ? "▼" : "▶"}
                     </button>
-                    <button
-                      onClick={() => handleDelete(contact.id)}
-                      className="delete-btn"
-                    >
-                      Delete
-                    </button>
+                    <strong>{customer.name}</strong>
+                    <span style={{ marginLeft: "10px", color: (customer.history || []).reduce((sum, e) => (e.type === "credit" ? sum + e.amount : sum - e.amount), 0) > 0 ? "red" : "green" }}>
+                      Balance: ₹{(customer.history || []).reduce((sum, e) => (e.type === "credit" ? sum + e.amount : sum - e.amount), 0).toFixed(2)}
+                    </span>
                   </div>
+                  {expandedCustomer === customer.id && (
+                    <div className="customer-details">
+                      <p>Email: {customer.email || "N/A"}</p>
+                      <p>Phone: {customer.phone}</p>
+                      <p>Address: {customer.address || "N/A"}</p>
+                      {customer.history && customer.history.length > 0 ? (
+                        <div>
+                          <strong>History:</strong>
+                          <ul>
+                            {customer.history.map((entry, index) => (
+                              <li
+                                key={index}
+                                style={{
+                                  color: entry.type === "credit" ? "red" : "green",
+                                }}
+                              >
+                                {entry.type === "credit" ? "Credit" : "Payment"}: ₹
+                                {entry.amount.toFixed(2)} - {entry.date}{" "}
+                                {entry.items?.join(", ") || ""}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : (
+                        <p>No history available</p>
+                      )}
+                      <div className="btn-group">
+                        <button
+                          onClick={() => handleEdit(customer.id)}
+                          className="edit-btn"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(customer.id)}
+                          className="delete-btn"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

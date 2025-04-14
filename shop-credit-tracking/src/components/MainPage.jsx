@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './style.css';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./style.css";
 
 function Calculator() {
-  const [display, setDisplay] = useState('');
+  const [display, setDisplay] = useState("");
 
   const appendToDisplay = (value) => {
     setDisplay((prev) => prev + value);
   };
 
   const clearDisplay = () => {
-    setDisplay('');
+    setDisplay("");
   };
 
   const calculate = () => {
@@ -18,13 +18,13 @@ function Calculator() {
       const result = new Function(`return ${display}`)();
       setDisplay(result.toString());
     } catch {
-      setDisplay('Error');
-      setTimeout(() => setDisplay(''), 1000);
+      setDisplay("Error");
+      setTimeout(() => setDisplay(""), 1000);
     }
   };
 
-  const buttonValues = ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '=', '+'];
-  const clearButton = 'C';
+  const buttonValues = ["7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"];
+  const clearButton = "C";
 
   return (
     <div className="calculator">
@@ -34,7 +34,7 @@ function Calculator() {
         {buttonValues.map((btn) => (
           <button
             key={btn}
-            onClick={() => btn === '=' ? calculate() : appendToDisplay(btn)}
+            onClick={() => (btn === "=" ? calculate() : appendToDisplay(btn))}
           >
             {btn}
           </button>
@@ -46,24 +46,42 @@ function Calculator() {
 }
 
 function CreditTracker({ navigate }) {
-  const [customers, setCustomers] = useState(JSON.parse(localStorage.getItem('customers')) || []);
-  const [name, setName] = useState('');
-  const [items, setItems] = useState('');
-  const [phone, setPhone] = useState('');
-  const [amount, setAmount] = useState('');
+  const [customers, setCustomers] = useState([]);
+  const [name, setName] = useState("");
+  const [items, setItems] = useState("");
+  const [phone, setPhone] = useState("");
+  const [amount, setAmount] = useState("");
   const [editId, setEditId] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem('customers', JSON.stringify(customers));
+    try {
+      const storedCustomers = JSON.parse(localStorage.getItem("customers")) || [];
+      console.log("CreditTracker: Loaded customers", storedCustomers);
+      setCustomers(storedCustomers);
+    } catch (error) {
+      console.error("CreditTracker: Error loading customers", error);
+      setCustomers([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (customers.length > 0) {
+      try {
+        console.log("CreditTracker: Saving customers", customers);
+        localStorage.setItem("customers", JSON.stringify(customers));
+      } catch (error) {
+        console.error("CreditTracker: Error saving customers", error);
+      }
+    }
   }, [customers]);
 
   const addCredit = () => {
     if (name && amount) {
       const creditEntry = {
-        type: 'credit',
+        type: "credit",
         date: new Date().toLocaleDateString(),
-        time: new Date().toLocaleTimeString(), // Added time
-        items: items ? items.split(',').map(item => item.trim()) : [],
+        time: new Date().toLocaleTimeString(),
+        items: items ? items.split(",").map((item) => item.trim()) : [],
         amount: parseFloat(amount),
       };
 
@@ -80,35 +98,40 @@ function CreditTracker({ navigate }) {
           id: Date.now(),
           name,
           phone,
+          email: "",
+          address: "",
           history: [creditEntry],
         };
         setCustomers([...customers, newCustomer]);
       }
 
-      setName('');
-      setItems('');
-      setPhone('');
-      setAmount('');
+      setName("");
+      setItems("");
+      setPhone("");
+      setAmount("");
     } else {
-      alert('Please enter both name and amount!');
+      alert("Please enter name, phone, and amount!");
     }
   };
 
   const addPayment = (customerId) => {
-    const amountPaid = prompt('Enter amount paid:');
+    const amountPaid = prompt("Enter amount paid:");
     const value = parseFloat(amountPaid);
-    if (!value || isNaN(value) || value <= 0) return alert('Invalid amount');
+    if (!value || isNaN(value) || value <= 0) return alert("Invalid amount");
 
     const updated = customers.map((c) => {
       if (c.id === customerId) {
         return {
           ...c,
-          history: [...c.history, {
-            type: 'payment',
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString(), // Added time
-            amount: value,
-          }],
+          history: [
+            ...c.history,
+            {
+              type: "payment",
+              date: new Date().toLocaleDateString(),
+              time: new Date().toLocaleTimeString(),
+              amount: value,
+            },
+          ],
         };
       }
       return c;
@@ -116,9 +139,13 @@ function CreditTracker({ navigate }) {
     setCustomers(updated);
   };
 
-  const calculateUnpaid = (history) => {
-    const credit = history.filter(h => h.type === 'credit').reduce((sum, h) => sum + h.amount, 0);
-    const paid = history.filter(h => h.type === 'payment').reduce((sum, h) => sum + h.amount, 0);
+  const calculateUnpaid = (history = []) => {
+    const credit = history
+      .filter((h) => h.type === "credit")
+      .reduce((sum, h) => sum + h.amount, 0);
+    const paid = history
+      .filter((h) => h.type === "payment")
+      .reduce((sum, h) => sum + h.amount, 0);
     return credit - paid;
   };
 
@@ -136,25 +163,52 @@ function CreditTracker({ navigate }) {
       </div>
 
       <div className="input-group">
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Customer Name" />
-        <input type="text" value={items} onChange={(e) => setItems(e.target.value)} placeholder="Items (e.g., milk, bread)" />
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Customer Name"
+        />
+        <input
+          type="text"
+          value={items}
+          onChange={(e) => setItems(e.target.value)}
+          placeholder="Items (e.g., milk, bread)"
+        />
         <input
           type="tel"
           value={phone}
           onChange={(e) => {
-            const value = e.target.value.replace(/\D/g, '');
+            const value = e.target.value.replace(/\D/g, "");
             if (value.length <= 10) setPhone(value);
           }}
           placeholder="Phone (10 digits)"
           maxLength={10}
         />
-        <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Credit Amount" />
-        <button onClick={addCredit}>{editId ? 'Update Credit' : 'Add Credit'}</button>
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Credit Amount"
+        />
+        <button onClick={addCredit}>
+          {editId ? "Update Credit" : "Add Credit"}
+        </button>
       </div>
 
       <div className="history-container">
-        <button className="history-button" onClick={() => navigate("/customerhistory")}>History</button>
-        <button className="plus-symbol" onClick={() => navigate("/customerform")}>+</button>
+        <button
+          className="history-button"
+          onClick={() => navigate("/customerhistory")}
+        >
+          History
+        </button>
+        <button
+          className="plus-symbol"
+          onClick={() => navigate("/customerform")}
+        >
+          +
+        </button>
       </div>
 
       <ul>
@@ -168,7 +222,9 @@ function CreditTracker({ navigate }) {
                 <br />
                 <small>Phone: {customer.phone}</small>
               </div>
-              <button onClick={() => addPayment(customer.id)}>Pay Amount</button>
+              <button onClick={() => addPayment(customer.id)}>
+                Pay Amount
+              </button>
             </li>
           );
         })}

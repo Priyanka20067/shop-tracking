@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile Hover Menu</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f3f3f3;
+      font-family: sans-serif;
+    }
+
+    header {
+      position: relative;
+      height: 100px;
+      background: #333;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .profile-container {
+      position: relative;
+      width: 60px;
+      height: 60px;
+    }
+
+    .profile-pic {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+    }
+
+    .menu {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .menu a {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      color: #333;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 50%;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      opacity: 0;
+      pointer-events: auto;
+    }
+
+    .profile-container:hover .menu a {
+      opacity: 1;
+    }
+
+    .menu a:nth-child(1) {
+      transform: translate(-50%, -150%);
+    }
+
+    .menu a:nth-child(2) {
+      transform: translate(60%, -60%);
+    }
+
+    .menu a:nth-child(3) {
+      transform: translate(150%, -50%);
+    }
+
+    .menu a:nth-child(4) {
+      transform: translate(60%, 60%);
+    }
+
+    .menu a:nth-child(5) {
+      transform: translate(-50%, 150%);
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="profile-container">
+      <img src="https://i.pravatar.cc/100" alt="Profile" class="profile-pic">
+      <div class="menu">
+        <a href="#home" title="Home">🏠</a>
+        <a href="#about" title="About">👤</a>
+        <a href="#services" title="Services">💼</a>
+        <a href="#projects" title="Projects">📁</a>
+        <a href="#contact" title="Contact">📞</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dummy Sections -->
+  <section id="home" style="height: 500px; background: #ddd;">Home Section</section>
+  <section id="about" style="height: 500px; background: #bbb;">About Section</section>
+  <section id="services" style="height: 500px; background: #999;">Services Section</section>
+  <section id="projects" style="height: 500px; background: #777;">Projects Section</section>
+  <section id="contact" style="height: 500px; background: #555; color: white;">Contact Section</section>
+
+</body>
+</html>
+  
