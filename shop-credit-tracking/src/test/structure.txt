@@ -1,0 +1,99 @@
+src/
+├── components/
+│   ├── Calculator.js
+│   ├── CreditInput.js
+│   ├── CustomerList.js
+│   ├── CustomerGroup.js
+│   ├── Notification.js
+│   ├── BackupManager.js
+│   └── FeedbackForm.js
+├── pages/
+│   ├── Dashboard.js
+│   ├── CustomerForm.js
+│   ├── CustomerHistory.js
+│   └── MainPage.js
+├── styles/
+│   ├── Calculator.css
+│   ├── CreditInput.css
+│   ├── CustomerForm.css
+│   ├── CustomerHistory.css
+│   ├── Dashboard.css
+│   └── App.css
+├── utils/
+│   ├── storage.js
+│   ├── notifications.js
+│   └── qrCode.js
+├── assets/
+│   └── menu.png
+├── App.js
+├── index.js
+└── package.json
+
+
+version-2.0
+src/
+├── components/
+│   ├── BackupManager.js
+│   ├── Calculator.js
+│   ├── CreditInput.js
+│   ├── CustomerGroup.js
+│   ├── CustomerList.js
+│   ├── FeedbackForm.js
+│   ├── Notification.js
+│   └── Tooltip.js
+├── pages/
+│   ├── AddItem.js
+│   ├── CustomerForm.js
+│   ├── CustomerHistory.js
+│   ├── Dashboard.js
+│   └── MainPage.js
+├── styles/
+│   ├── AddItem.css
+│   ├── Calculator.css
+│   ├── CreditInput.css
+│   ├── CustomerForm.css
+│   ├── CustomerHistory.css
+│   ├── Dashboard.css
+│   └── App.css
+├── utils/
+│   ├── storage.js
+│   ├── notifications.js
+│   └── qrCode.js
+├── assets/
+│   └── menu.png
+├── App.js
+├── index.js
+└── package.json
+
+version 3.0
+
+src/
+├── components/
+│   ├── CreditInput.js
+│   ├── CustomerGroup.js
+│   ├── FeedbackForm.js
+│   └── AddItem.js
+├── pages/
+│   ├── Dashboard.js
+│   ├── CustomerForm.js
+│   ├── CustomerHistory.js
+│   └── MainPage.js
+├── styles/
+│   ├── App.css
+│   ├── CreditInput.css
+│   ├── CustomerForm.css
+│   ├── CustomerHistory.css
+│   ├── Dashboard.css
+│   └── AddItem.css
+├── utils/
+│   ├── storage.js
+│   ├── notifications.js
+│   └── qrCode.js
+├── assets/
+│   └── menu.png
+├── locales/
+│   ├── en.json
+│   └── ta.json
+├── App.js
+├── index.js
+└── package.json
