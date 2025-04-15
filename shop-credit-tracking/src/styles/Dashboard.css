@@ -1,59 +1,211 @@
-/* checked-1 */
+/* Dashboard.css - Color Theme: Deep Blue (#2C3E50), Mustard Yellow (#F4A261), Soft Cream (#FAF3E0) */
+
+:root {
+  --deep-blue: #2C3E50;
+  --mustard-yellow: #F4A261;
+  --soft-cream: #FAF3E0;
+  --deep-blue-light: #3D5A73;
+  --mustard-yellow-light: #F7B983;
+  --text-dark: #333333;
+  --text-light: #FFFFFF;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: var(--soft-cream);
+  color: var(--deep-blue);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background: var(--bg);
 }
+
+.dashboard h1 {
+  color: var(--deep-blue);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+.dashboard h2 {
+  color: var(--deep-blue);
+  border-bottom: 2px solid var(--mustard-yellow);
+  padding-bottom: 8px;
+  margin-top: 30px;
+}
+
+.dashboard h3 {
+  color: var(--deep-blue-light);
+  margin-top: 20px;
+}
+
+.dashboard p {
+  line-height: 1.6;
+  color: var(--text-dark);
+}
+
 .dashboard-nav {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-.dashboard-nav button {
-  background: var(--primary);
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.dashboard-nav button:hover {
-  background: #1976d2;
-}
-section {
-  background: var(--card-bg);
-  padding: 20px;
+  background-color: var(--deep-blue);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-section h2 {
-  margin-top: 0;
-}
-section button {
-  background: var(--success);
-  color: white;
   padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px var(--shadow);
 }
-section button a {
-  color: white;
+
+.dashboard-nav button {
+  background-color: transparent;
+  color: var(--text-light);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.dashboard-nav button:hover {
+  background-color: var(--deep-blue-light);
+  transform: translateY(-2px);
+}
+
+section {
+  background-color: var(--text-light);
+  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+section ul {
+  padding-left: 20px;
+}
+
+section ul li {
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+button, a.button {
+  background-color: var(--mustard-yellow);
+  color: var(--deep-blue);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+  display: inline-block;
+  text-decoration: none;
+  margin: 10px 5px;
+}
+
+button:hover, a.button:hover {
+  background-color: var(--mustard-yellow-light);
+  transform: translateY(-2px);
+}
+
+button a {
+  color: var(--deep-blue);
   text-decoration: none;
 }
-section button:hover {
-  background: #388e3c;
+
+input[type="file"] {
+  display: block;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: var(--soft-cream);
+  border: 1px solid var(--deep-blue-light);
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
-section ul {
-  list-style: none;
+
+/* Analytics section styling */
+#analytics ul {
+  list-style-type: none;
   padding: 0;
 }
-section ul li {
-  padding: 5px 0;
+
+#analytics li {
+  background-color: var(--soft-cream);
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px var(--shadow);
 }
-#analytics p,
-#analytics ul {
-  margin: 10px 0;
+
+/* Feedback form styling */
+#feedback form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#feedback input, 
+#feedback textarea {
+  padding: 12px;
+  border: 1px solid var(--deep-blue-light);
+  border-radius: 5px;
+  background-color: var(--soft-cream);
+}
+
+#feedback textarea {
+  min-height: 150px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1a2639;
+    color: var(--soft-cream);
+  }
+  
+  .dashboard h1,
+  .dashboard h2,
+  .dashboard h3 {
+    color: var(--soft-cream);
+  }
+  
+  .dashboard p {
+    color: #e0e0e0;
+  }
+  
+  section {
+    background-color: var(--deep-blue);
+  }
+  
+  section ul li {
+    color: #e0e0e0;
+  }
+  
+  #analytics li {
+    background-color: var(--deep-blue-light);
+    color: var(--soft-cream);
+  }
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+  .dashboard-nav {
+    flex-direction: column;
+  }
+  
+  .dashboard-nav button {
+    width: 100%;
+  }
+  
+  section {
+    padding: 15px;
+  }
 }
