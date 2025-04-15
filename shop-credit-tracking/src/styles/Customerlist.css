@@ -1,0 +1,216 @@
+/* CustomerList Component Styling */
+.contacts-section {
+    background-color: #FAF3E0; /* Soft Cream background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+    position: relative;
+    overflow: hidden;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+  }
+  
+  /* Dark mode styling */
+  .contacts-section.dark {
+    background-color: #2C3E50; /* Deep Blue for dark mode */
+    color: #FAF3E0; /* Soft Cream text for dark mode */
+  }
+  
+  /* Background effect */
+  .contacts-section::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      rgba(44, 62, 80, 0.03) 0%,  /* Deep Blue */
+      rgba(244, 162, 97, 0.05) 50%,  /* Mustard Yellow */
+      rgba(250, 243, 224, 0.07) 100%  /* Soft Cream */
+    );
+    animation: rotate 20s linear infinite;
+    z-index: 0;
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Empty list message */
+  .contacts-section p {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    font-style: italic;
+    color: #2C3E50; /* Deep Blue */
+    padding: 15px 0;
+  }
+  
+  .contacts-section.dark p {
+    color: #FAF3E0; /* Soft Cream for dark mode text */
+  }
+  
+  /* Customer list styling */
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .contact-item {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-left: 3px solid #F4A261; /* Mustard Yellow */
+    border-radius: 4px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .contacts-section.dark .contact-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: #F4A261; /* Keep Mustard Yellow accent in dark mode */
+  }
+  
+  /* Customer header styling */
+  .customer-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .customer-header strong {
+    flex-grow: 1;
+    color: #2C3E50; /* Deep Blue */
+  }
+  
+  .contacts-section.dark .customer-header strong {
+    color: #FAF3E0; /* Soft Cream for dark mode */
+  }
+  
+  /* Expand/collapse button styling */
+  .customer-header button {
+    color: #2C3E50; /* Deep Blue */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+  }
+  
+  .customer-header button:hover {
+    background-color: rgba(244, 162, 97, 0.2); /* Mustard Yellow with transparency */
+  }
+  
+  .contacts-section.dark .customer-header button {
+    color: #FAF3E0; /* Soft Cream for dark mode */
+  }
+  
+  /* Customer details styling */
+  .customer-details {
+    padding: 0 15px 15px 42px; /* Indentation to align with header content */
+    border-top: 1px dashed rgba(44, 62, 80, 0.2); /* Soft divider */
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .contacts-section.dark .customer-details {
+    border-top-color: rgba(250, 243, 224, 0.2); /* Soft divider for dark mode */
+  }
+  
+  .customer-details p {
+    margin: 8px 0;
+    text-align: left;
+    font-style: normal;
+    color: #2C3E50; /* Deep Blue */
+  }
+  
+  .contacts-section.dark .customer-details p {
+    color: #FAF3E0; /* Soft Cream for dark mode */
+  }
+  
+  /* Transaction history styling */
+  .customer-details ul {
+    list-style: none;
+    padding-left: 10px;
+    margin: 8px 0;
+    border-left: 2px solid #F4A261; /* Mustard Yellow */
+  }
+  
+  .customer-details ul li {
+    padding: 6px 0;
+    font-size: 0.95em;
+  }
+  
+  /* Button group styling */
+  .btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .btn-group button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .edit-btn {
+    background-color: #F4A261; /* Mustard Yellow */
+    color: #2C3E50; /* Deep Blue */
+  }
+  
+  .edit-btn:hover {
+    background-color: #e8934d;
+    transform: translateY(-2px);
+  }
+  
+  .delete-btn {
+    background-color: #2C3E50; /* Deep Blue */
+    color: #FAF3E0; /* Soft Cream */
+  }
+  
+  .delete-btn:hover {
+    background-color: #1a2530;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .contacts-section {
+      padding: 15px;
+    }
+    
+    .customer-details {
+      padding: 0 10px 10px 32px;
+    }
+    
+    .btn-group {
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .btn-group button {
+      width: 100%;
+    }
+  }
