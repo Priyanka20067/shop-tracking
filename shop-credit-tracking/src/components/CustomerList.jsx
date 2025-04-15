@@ -1,5 +1,6 @@
 // checked
 import React, { useState } from "react";
+import "../styles/Customerlist.css";
 
 function CustomerList({ customers, onEdit, onDelete, language, darkMode }) {
   const [expandedCustomer, setExpandedCustomer] = useState(null);
